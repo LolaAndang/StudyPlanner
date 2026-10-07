@@ -1,0 +1,50 @@
+{% extends 'base.html' %}
+
+{% block title %}Dashboard | Study Planner{% endblock %}
+{% block nav_home %}active{% endblock %}
+{% block page_title %}Dashboard{% endblock %}
+
+{% block content %}
+<div class="card">
+    <p class="welcome-text">Organize and track your study schedules and deadlines efficiently.</p>
+    
+    <!-- Quick Action Cards -->
+    <div class="quick-links" style="display: flex; gap: 16px; margin: 20px 0;">
+        <a href="{% url 'task_list' %}" class="quick-card" style="padding: 16px; border: 1px solid #eee; border-radius: 8px; text-decoration: none; color: inherit;">
+            <span class="quick-icon">📝</span>
+            <span class="quick-label">View Tasks ({{ total_tasks }})</span>
+        </a>
+        <a href="{% url 'task_create' %}" class="quick-card" style="padding: 16px; border: 1px solid #eee; border-radius: 8px; text-decoration: none; color: inherit;">
+            <span class="quick-icon">✨</span>
+            <span class="quick-label">Create New Task</span>
+        </a>
+    </div>
+
+    <!-- Upcoming Tasks Summary -->
+    <h3 style="margin-top: 24px;">Upcoming Deadlines</h3>
+    <table style="width: 100%; border-collapse: collapse; margin-top: 10px;">
+        <thead>
+            <tr style="text-align: left; border-bottom: 2px solid #eee;">
+                <th style="padding: 8px;">Task</th>
+                <th style="padding: 8px;">Subject</th>
+                <th style="padding: 8px;">Due Date</th>
+                <th style="padding: 8px;">Status</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for task in recent_tasks %}
+            <tr style="border-bottom: 1px solid #f0f0f0;">
+                <td style="padding: 8px;">{{ task.title }}</td>
+                <td style="padding: 8px;">{{ task.subject }}</td>
+                <td style="padding: 8px;">{{ task.due_date }}</td>
+                <td style="padding: 8px;">{{ task.status }}</td>
+            </tr>
+            {% empty %}
+            <tr>
+                <td colspan="4" style="padding: 12px; color: #888;">No upcoming tasks yet.</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock %}

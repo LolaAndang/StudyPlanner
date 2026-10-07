@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>{% block title %}Study Planner{% endblock %}</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'style.css' %}">
+</head>
+<body>
+
+<div class="layout">
+
+    <aside class="sidebar">
+        <div class="brand">
+            <span class="brand-icon">📚</span>
+            <span class="brand-name">Study Planner</span>
+        </div>
+        <nav>
+            <a href="{% url 'home' %}" class="nav-link {% block nav_home %}{% endblock %}">
+                <span class="nav-icon">⌂</span> Dashboard
+            </a>
+            <a href="{% url 'task_list' %}" class="nav-link {% block nav_tasks %}{% endblock %}">
+                <span class="nav-icon">📝</span> Tasks
+            </a>
+            <a href="{% url 'task_create' %}" class="nav-link {% block nav_create %}{% endblock %}">
+                <span class="nav-icon">➕</span> Add Task
+            </a>
+        </nav>
+    </aside>
+
+    <main class="content">
+        <header class="topbar">
+            <h1>{% block page_title %}Dashboard{% endblock %}</h1>
+            <div class="topbar-meta">{% now "F j, Y" %}</div>
+        </header>
+
+        {% block content %}{% endblock %}
+    </main>
+
+</div>
+
+</body>
+</html>

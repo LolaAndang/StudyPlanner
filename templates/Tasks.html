@@ -1,0 +1,63 @@
+{% extends 'base.html' %}
+
+{% block title %}Tasks | Study Planner{% endblock %}
+{% block nav_tasks %}active{% endblock %}
+{% block page_title %}Study Tasks{% endblock %}
+
+{% block content %}
+<div class="card">
+    <table>
+        <thead>
+            <tr>
+                <th>Title</th>
+                <th>Subject</th>
+                <th>Due Date</th>
+                <th>Priority</th>
+                <th>Status</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for task in tasks %}
+            <tr>
+                <td><strong>{{ task.title }}</strong></td>
+                <td>{{ task.subject }}</td>
+                <td>{{ task.due_date|date:"M d, Y" }}</td>
+                <td>
+                    <span class="badge {% if task.priority == 'High' %}badge-high{% else %}badge-normal{% endif %}">
+                        {{ task.priority }}
+                    </span>
+                </td>
+                <td>
+                    <a href="{% url 'task_toggle_status' task.id %}" style="text-decoration: none;" title="Click to toggle status">
+                        {% if task.status == 'Completed' %}
+                            <span class="badge" style="background: rgba(46, 125, 50, 0.15); color: #2e7d32; font-weight: 600; padding: 4px 8px; border-radius: 4px; cursor: pointer;">
+                                ✓ Completed
+                            </span>
+                        {% else %}
+                            <span class="badge" style="background: rgba(255, 193, 7, 0.15); color: #b78103; font-weight: 600; padding: 4px 8px; border-radius: 4px; cursor: pointer;">
+                                ⏳ Pending
+                            </span>
+                        {% endif %}
+                    </a>
+                </td>
+                <td>
+                    <a href="{% url 'task_edit' task.id %}" style="color: #2e7d32; text-decoration: none; font-weight: 600; padding: 4px 8px; border-radius: 4px; background: rgba(46, 125, 50, 0.1); margin-right: 6px;">
+                        Edit
+                    </a>
+                    <a href="{% url 'task_delete' task.id %}" style="color: #d9534f; text-decoration: none; font-weight: 600; padding: 4px 8px; border-radius: 4px; background: rgba(217, 83, 79, 0.1);">
+                        Delete
+                    </a>
+                </td>
+            </tr>
+            {% empty %}
+            <tr>
+                <td colspan="6" style="text-align: center; color: #7a8f8d; padding: 24px;">
+                    No tasks found. Click "Add Task" to create one!
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock %}
